@@ -13,16 +13,14 @@ import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
-import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 @Configuration//声明当前类是一个配置类（类似于 spring_xxx.xml 的文件）
 @EnableWebMvc//若无此注解，WebMvcConfigurerAdapter无效
 @ComponentScan//自动扫描spring注解 比如@Service、@Component、@Repository和@Controller的类，并注册为Bean
-public class SpringConfig extends WebMvcConfigurerAdapter {
+public class SpringConfig implements WebMvcConfigurer {
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
