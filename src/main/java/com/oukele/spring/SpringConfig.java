@@ -6,6 +6,8 @@ import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
+import org.springframework.format.datetime.standard.DateTimeFormatterRegistrar;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
@@ -18,9 +20,16 @@ import java.util.Collections;
 import java.util.List;
 
 @Configuration//声明当前类是一个配置类（类似于 spring_xxx.xml 的文件）
-@EnableWebMvc//若无此注解，WebMvcConfigurerAdapter无效
+@EnableWebMvc//若无此注解，WebMvcConfigurer无效
 @ComponentScan//自动扫描spring注解 比如@Service、@Component、@Repository和@Controller的类，并注册为Bean
 public class SpringConfig implements WebMvcConfigurer {
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        DateTimeFormatterRegistrar registrar = new DateTimeFormatterRegistrar();
+        registrar.setUseIsoFormat(true);
+        registrar.registerFormatters(registry);
+    }
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
